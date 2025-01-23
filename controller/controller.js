@@ -38,7 +38,7 @@ module.exports.userLogin = async (req, res) => {
             },
             process.env.JWT_SECRET_TOKEN
         )
-        res.cookie("token", token, { expire: new Date() + 1 });
+        res.cookie("token", token, { expires: new Date(Date.now() + 86400000) });
         return res.status(200).send({ token, data: user })
 
     } catch (error) {
@@ -91,7 +91,6 @@ module.exports.postReview = async (req, res) => {
             { user, book, rating, reviewText }
         )
         let newReview = await review.save()
-        console.log("🚀 ~ module.exports.postReviews= ~ newReview:", newReview)
         await Book.findByIdAndUpdate(
             book,
             { $push: { reviews: newReview._id } },
@@ -113,10 +112,18 @@ module.exports.deleteReview = async (req, res) => {
     try {
         const { params: { reviewID } = {} } = req
         let review = await Review.findOne({ _id: reviewID })
+        await Book.findByIdAndUpdate(
+            review.book.toString(),
+            {
+                $pull: { reviews: reviewID }
+            }
+        )
+        await User.findByIdAndUpdate(
+            review.user.toString(),
+            { $pull: { reviews: reviewID } }
+        )
         let deletedReview = await Review.deleteOne({ _id: reviewID })
-        await Book.findByIdAndUpdate(review.book.toString(), { $pull: { reviews: deletedReview._id } });
 
-        await User.findByIdAndUpdate(review.user.toString(), { $pull: { reviews: deletedReview._id } });
         return res.status(200).send({ message: "review deleted", data: deletedReview })
     } catch (error) {
         console.log("🚀 ~ module.exports.deleteReview ~ error:", error)
