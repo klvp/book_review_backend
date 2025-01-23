@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken")
 const { User, Book, Review } = require("../models/models")
 const { genHashPassword, isPasswordCorrect } = require("../utility/helper")
-const { ObjectId } = require('mongoose')
+
 module.exports.userRegisteration = async (req, res) => {
     try {
         const { body: { name, email, password } } = req
@@ -86,20 +86,20 @@ module.exports.getBookDetailsWithReviewsByID = async (req, res) => {
 
 module.exports.postReview = async (req, res) => {
     try {
-        const { body: { user, book, rating, reviewText = "" } = {} } = req
+        const { body: { book, rating, reviewText = "" } = {} } = req
         let review = new Review(
-            { user, book, rating, reviewText }
+            { user: req.user._id, book, rating, reviewText }
         )
         let newReview = await review.save()
         await Book.findByIdAndUpdate(
             book,
             { $push: { reviews: newReview._id } },
-            { new: true } // Return the updated document
+            { new: true }
         );
         await User.findByIdAndUpdate(
-            user,
+            req.user._id,
             { $push: { reviews: newReview._id } },
-            { new: true } // Return the updated document
+            { new: true }
         );
         return res.status(201).send({ message: "posted review", data: newReview })
     } catch (error) {
@@ -111,15 +111,15 @@ module.exports.postReview = async (req, res) => {
 module.exports.deleteReview = async (req, res) => {
     try {
         const { params: { reviewID } = {} } = req
-        let review = await Review.findOne({ _id: reviewID })
+        let review = await Review.findById(reviewID)
         await Book.findByIdAndUpdate(
-            review.book.toString(),
+            review.book,
             {
                 $pull: { reviews: reviewID }
             }
         )
         await User.findByIdAndUpdate(
-            review.user.toString(),
+            req.user._id,
             { $pull: { reviews: reviewID } }
         )
         let deletedReview = await Review.deleteOne({ _id: reviewID })
