@@ -4,7 +4,9 @@ const {
     getAllBooks,
     postReview,
     getBookDetailsWithReviewsByID,
-    deleteReview
+    deleteReview,
+    getUser,
+    updateReview
 } = require("./controller/controller")
 const { auth } = require("./middleware/auth")
 const router = require("express").Router()
@@ -13,6 +15,8 @@ const router = require("express").Router()
 router.post("/register", userRegisteration)
 router.post("/login", userLogin)
 
+router.post("/user", auth, getUser)
+
 // books endpoints
 router.get("/books", getAllBooks)
 router.get("/books/:bookID", getBookDetailsWithReviewsByID)
@@ -20,5 +24,6 @@ router.get("/books/:bookID", getBookDetailsWithReviewsByID)
 // reviews endpoints
 router.post("/reviews", auth, postReview)
 router.delete("/reviews/:reviewID", auth, deleteReview)
+router.patch("/reviews/:reviewID", auth, updateReview)
 
 module.exports = router

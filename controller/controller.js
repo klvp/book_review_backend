@@ -39,7 +39,7 @@ module.exports.userLogin = async (req, res) => {
             process.env.JWT_SECRET_TOKEN
         )
         res.cookie("token", token, {
-            expires: new Date(Date.now() + 300000),
+            expires: new Date(Date.now() + 3000000),
         });
         return res.status(200).send({ token, data: user })
 
@@ -83,8 +83,8 @@ module.exports.getBookDetailsWithReviewsByID = async (req, res) => {
             .findById(bookID)
             .populate({
                 path: "reviews",
-                select: { rating: 1, reviewText: 1, user: 1, createdAt: 1 }, 
-                options: { sort: { createdAt: -1 } } 
+                select: { rating: 1, reviewText: 1, user: 1, createdAt: 1 },
+                options: { sort: { createdAt: -1 } }
             })
         return res.status(200).send({ message: "book reviews", data: newReview })
     } catch (error) {
@@ -137,4 +137,48 @@ module.exports.deleteReview = async (req, res) => {
         console.log("🚀 ~ module.exports.deleteReview ~ error:", error)
         return res.status(500).send({ message: "something happened", error })
     }
+}
+
+module.exports.updateReview = async (req, res) => {
+    try {
+        const {
+            params: { reviewID } = {},
+            body: { rating, reviewText = "" } = {},
+        } = req
+        let review = await Review.findById(reviewID)
+        if (!review) return res.status(404).send({ message: "comment not found" })
+        await Review.findByIdAndUpdate(
+            reviewID,
+            {
+                $set: { rating, reviewText }
+            }
+        )
+
+        return res.status(200).send({ message: "review updated", data: updatedReview })
+    } catch (error) {
+        console.log("🚀 ~ module.exports.updateReview= ~ error:", error)
+        return res.status(500).send({ message: "something happened", error })
+    }
+}
+
+module.exports.getUser = async (req, res) => {
+    try {
+        if (!req.user._id) return res.status(401).send({ message: "user not authorised", data: {} })
+        let user = await User.findById(req.user._id).populate({
+            path: "reviews",
+            select: { rating: 1, reviewText: 1, user: 1, createdAt: 1, book: 1 },
+            options: { sort: { createdAt: -1 } },
+            populate: {
+                path: "book",
+                select: { title: 1, image: 1 }
+            }
+        })
+        console.log("🚀 ~ user ~ user:", user)
+        if (!user) return res.status(404).send({ message: "user not found", data: {} })
+        return res.status(200).send({ message: "user fetched", data: user })
+    } catch (error) {
+        console.log("🚀 ~ module.exports.getUser= ~ error:", error)
+        return res.status(500).send({ message: "something happened", error })
+    }
+
 }
