@@ -5,7 +5,10 @@ const ApiRoutes = require("./routes")
 
 const app = express()
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: "http://localhost:5173", // Frontend origin
+    credentials: true, // Allow credentials (cookies, etc.)
+}))
 
 let PORT = process.env.PORT || 5000
 require("./lib/db.connection")

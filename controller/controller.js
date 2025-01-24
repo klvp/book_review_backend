@@ -38,7 +38,9 @@ module.exports.userLogin = async (req, res) => {
             },
             process.env.JWT_SECRET_TOKEN
         )
-        res.cookie("token", token, { expires: new Date(Date.now() + 86400000) });
+        res.cookie("token", token, {
+            expires: new Date(Date.now() + 300000),
+        });
         return res.status(200).send({ token, data: user })
 
     } catch (error) {
@@ -77,7 +79,13 @@ module.exports.getBookByID = async (req, res) => {
 module.exports.getBookDetailsWithReviewsByID = async (req, res) => {
     try {
         const { params: { bookID } = {} } = req
-        let newReview = await Book.findById(bookID).populate("reviews", { rating: 1, reviewText: 1, _id: 0, user: 1 })
+        let newReview = await Book
+            .findById(bookID)
+            .populate({
+                path: "reviews",
+                select: { rating: 1, reviewText: 1, user: 1, createdAt: 1 }, 
+                options: { sort: { createdAt: -1 } } 
+            })
         return res.status(200).send({ message: "book reviews", data: newReview })
     } catch (error) {
         return res.status(500).send({ message: "something happened", error })
