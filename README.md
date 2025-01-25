@@ -1,6 +1,6 @@
 # Book Review Backend
 
-## Versions used in this frontend
+## Versions used in this backend
 
 - Node.js: v20.17.0
 - MongoDB: 7.0.12
