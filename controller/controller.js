@@ -100,7 +100,7 @@ module.exports.postReview = async (req, res) => {
     try {
         const { body: { book, rating, reviewText = "" } = {} } = req
         let reviewExist = await Review.findOne({ user: req.user._id, book })
-        if (reviewExist._id) {
+        if (reviewExist?._id) {
             await Review.findByIdAndUpdate(
                 reviewExist._id,
                 {
@@ -175,7 +175,7 @@ module.exports.updateReview = async (req, res) => {
             }
         )
         await updateBookRating(review.book)
-        return res.status(200).send({ message: "review updated", data: updatedReview })
+        return res.status(200).send({ message: "review updated" })
     } catch (error) {
         console.log("🚀 ~ module.exports.updateReview= ~ error:", error)
         return res.status(500).send({ message: "something happened", error })
@@ -194,7 +194,6 @@ module.exports.getUser = async (req, res) => {
                 select: { title: 1, image: 1 }
             }
         })
-        console.log("🚀 ~ user ~ user:", user)
         if (!user) return res.status(404).send({ message: "user not found", data: {} })
         return res.status(200).send({ message: "user fetched", data: user })
     } catch (error) {
