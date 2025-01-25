@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken")
 const { User, Book, Review } = require("../models/models")
-const { genHashPassword, isPasswordCorrect } = require("../utility/helper")
+const { genHashPassword, isPasswordCorrect, updateBookRating } = require("../utility/helper")
 
 module.exports.userRegisteration = async (req, res) => {
     try {
@@ -109,6 +109,10 @@ module.exports.postReview = async (req, res) => {
             { $push: { reviews: newReview._id } },
             { new: true }
         );
+
+        await updateBookRating(book)
+
+
         return res.status(201).send({ message: "posted review", data: newReview })
     } catch (error) {
         console.log("🚀 ~ module.exports.postReviews= ~ error:", error)
@@ -132,6 +136,8 @@ module.exports.deleteReview = async (req, res) => {
         )
         let deletedReview = await Review.deleteOne({ _id: reviewID })
 
+        await updateBookRating(review.book)
+
         return res.status(200).send({ message: "review deleted", data: deletedReview })
     } catch (error) {
         console.log("🚀 ~ module.exports.deleteReview ~ error:", error)
@@ -153,7 +159,7 @@ module.exports.updateReview = async (req, res) => {
                 $set: { rating, reviewText }
             }
         )
-
+        await updateBookRating(review.book)
         return res.status(200).send({ message: "review updated", data: updatedReview })
     } catch (error) {
         console.log("🚀 ~ module.exports.updateReview= ~ error:", error)
