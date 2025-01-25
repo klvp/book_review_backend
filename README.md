@@ -12,6 +12,7 @@
 
    - Start your MongoDB server.
    - Open MongoDB Compass and connect to the local MongoDB server at `mongodb://localhost:27017/books_review`.
+   - Note: `books_review` is the name of the database.
 
 2. **Clone the Repository**
 
