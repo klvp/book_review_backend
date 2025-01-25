@@ -7,7 +7,7 @@ module.exports.userRegisteration = async (req, res) => {
         const { body: { name, email, password } } = req
         let user = await User.findOne({ email })
         if (user) {
-            return res.status(400).send({ status: false, message: "User already exist" })
+            return res.status(403).send({ status: false, message: "User already exist" })
         }
         const newUser = new User({
             name,
@@ -84,7 +84,11 @@ module.exports.getBookDetailsWithReviewsByID = async (req, res) => {
             .populate({
                 path: "reviews",
                 select: { rating: 1, reviewText: 1, user: 1, createdAt: 1 },
-                options: { sort: { createdAt: -1 } }
+                options: { sort: { createdAt: -1 } },
+                populate: {
+                    path: "user",
+                    select: { name: 1 }
+                }
             })
         return res.status(200).send({ message: "book reviews", data: newReview })
     } catch (error) {
@@ -95,6 +99,17 @@ module.exports.getBookDetailsWithReviewsByID = async (req, res) => {
 module.exports.postReview = async (req, res) => {
     try {
         const { body: { book, rating, reviewText = "" } = {} } = req
+        let reviewExist = await Review.findOne({ user: req.user._id, book })
+        if (reviewExist._id) {
+            await Review.findByIdAndUpdate(
+                reviewExist._id,
+                {
+                    $set: { rating, reviewText }
+                }
+            )
+            await updateBookRating(reviewExist.book)
+            return res.status(200).send({ message: "user book review exist" })
+        }
         let review = new Review(
             { user: req.user._id, book, rating, reviewText }
         )
