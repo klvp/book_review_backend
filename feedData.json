@@ -1,0 +1,84 @@
+[
+    {
+        "title": "My First Coding Book",
+        "authors": [
+            "Kiki Prottsman"
+        ],
+        "description": "Get with the program! Introduce your child to the wonderful world of coding. Packed with flaps, wheels and sliders, this is the essential guide for children wishing to learn the ins and outs of coding. Written specifically for Key Stage 1 level, My First Coding Book teaches your child how to understand and use basic algorithms and bug fixes.",
+        "image": "http://books.google.com/books/content?id=Ab6nDgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api&fife=w400-h600",
+        "rating": 0
+    },
+    {
+        "title": "Computer Coding for Kids",
+        "authors": [
+            "Carol Vorderman"
+        ],
+        "description": "Don't just play computer games - help children build them with your own home computer! This visual guide helps kids understand the basics of computer coding using Scratch and Python. Kids can create online games, build animations, and practice coding skills through fun projects.",
+        "image": "http://books.google.com/books/content?id=5xGnDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api&fife=w400-h600",
+        "rating": 0
+    },
+    {
+        "title": "Beyond Coding",
+        "authors": [
+            "Marina Umaschi Bers"
+        ],
+        "description": "Why children should be taught coding not as a technical skill but as a new literacy—a way to express themselves and engage with the world. The book emphasizes teaching coding as a means of fostering character development, critical thinking, and community engagement alongside technical skills.",
+        "image": "http://books.google.com/books/content?id=8LtNEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api&fife=w400-h600",
+        "rating": 0
+    },
+    {
+        "title": "Algorithms and Data Structures",
+        "authors": [
+            "Niklaus Wirth"
+        ],
+        "description": "From the inventor of Pascal and Modula-2 comes a new version of Niklaus Wirth's classic work, Algorithms Plus Data Structure Equals Programs (PH, 1975). This title uses Modula-2 and includes new material on sequential structure, searching and priority search trees.",
+        "image": "http://books.google.com/books/content?id=HQ9RAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api&fife=w400-h600",
+        "rating": 0
+    },
+    {
+        "title": "Advanced JavaScript",
+        "authors": [
+            "Zachary Shute"
+        ],
+        "description": "Gain a deeper understanding of JavaScript and apply it to build small applications in backend, frontend, and mobile frameworks. Learn ES6 syntax, the event loop, asynchronous programming, test-driven development, and more. This book helps you enhance your web development skills using modern JavaScript.",
+        "image": "http://books.google.com/books/content?id=XiWGDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api&fife=w400-h600",
+        "rating": 0
+    },
+    {
+        "title": "Python for Everybody",
+        "authors": [
+            "Charles R. Severance"
+        ],
+        "description": "Python for Everybody introduces students to programming and software development through the lens of exploring data. This book uses Python 3 and is perfect for beginners. It also provides free downloadable materials and course content under a Creative Commons License.",
+        "image": "http://books.google.com/books/content?id=zjqzDAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api&fife=w400-h600",
+        "rating": 0
+    },
+    {
+        "title": "Clean Code",
+        "authors": [
+            "Robert C. Martin"
+        ],
+        "description": "Even bad code can function. But if code isn’t clean, it can bring a development organization to its knees. Robert C. Martin presents a revolutionary paradigm with Clean Code: A Handbook of Agile Software Craftsmanship, teaching developers how to write clean, readable, and efficient code through principles, case studies, and heuristics.",
+        "image": "http://books.google.com/books/content?id=_i6bDeoCQzsC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api&fife=w400-h600",
+        "rating": 0
+    },
+    {
+        "title": "The Go Programming Language",
+        "authors": [
+            "Alan A. A. Donovan",
+            "Brian W. Kernighan"
+        ],
+        "description": "The Go Programming Language is the authoritative resource for any programmer who wants to learn Go. It provides in-depth explanations of Go’s syntax, methods, concurrency, and metaprogramming with practical examples and exercises to help you master the language.",
+        "image": "http://books.google.com/books/content?id=SJHvCgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api&fife=w400-h600",
+        "rating": 0
+    },
+    {
+        "title": "The Principles of Object-Oriented JavaScript",
+        "authors": [
+            "Nicholas C. Zakas"
+        ],
+        "description": "JavaScript is a powerful object-oriented language, and in The Principles of Object-Oriented JavaScript, Nicholas C. Zakas explores its object-oriented nature, inheritance, and unique features, helping developers gain a deeper understanding of JavaScript’s capabilities and write cleaner, more efficient code.",
+        "image": "http://books.google.com/books/content?id=rorlAwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api&fife=w400-h600",
+        "rating": 0
+    }
+]
